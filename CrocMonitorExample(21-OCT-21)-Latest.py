@@ -43,24 +43,19 @@ class CrocMonitor:
 
     def storeDistance(self):
     
+        # Iterates through the location list and get the index at each location
         for index in range(0, len(self.locationList)-1):
-   
+            # Check if the neighbor column is null at current location row
             if self.locationList[index][4]!="":
+                # If not null, assign the current location to be the start point of the edge
                 startpoint = self.locationList[index][0]
-                endpoint = self.locationList[index][4]
-           
-                for indexa in range (0, len(self.points)-1):
-                    if self.points[indexa] == startpoint:
-                        indexPointa=indexa
-                
-                        for indexb in range(0, len(self.points)-1):
-                            if self.points[indexb] == endpoint:
-                                indexPointb = indexb
-                              
-                                distance = self.computeDistance(startpoint, endpoint)
-                           #store distance along path    
-                                break
-                        break
+                # Assign the neighbor of the start point to be the end point
+                endpoint = self.locationList[index][4]   
+                # Calculate the distance between the start and end points   
+                distance = self.computeDistance(startpoint, endpoint)
+                # Append the distance to the last column of the location row
+                self.locationList[index].append(distance)
+        return
    
       
     
@@ -81,7 +76,23 @@ class CrocMonitor:
     def computeDistance (self, a, b):
         
         # provide the distance between two points a and b on a path. Assume adjacent
+        
+        # Initialize the distance and the x, y coordinates of location a and b
         distance=0
+        xA = 0
+        xB = 0
+        yA = 0
+        yB = 0
+        # Find x, y coordinates of location a and b
+        for location in self.locationList:
+            if location[0] == a:
+                xA = location[1]
+                yA = location[2]
+            if location[0] == b:
+                xB = location[1]
+                yB = location[2]
+        # Calculate the distance between location a and b      
+        distance = math.sqrt((int(xA)-int(xB))**2 + (int(yA)-int(yB))**2)
         return distance
 
     def computeCosting(self, a, b):
@@ -140,9 +151,14 @@ class CrocMonitor:
         return pointList
 
 if __name__ == '__main__':
-   
+
     cm=CrocMonitor(size) 
     #print (cm.locationList)
+    
+    for i in range(0,len(cm.locationList)):
+        print(cm.locationList[i])
+    
+    
     #Changed examples
     cm.computeCosting("15","18")
   
