@@ -6,7 +6,6 @@ import numpy as np
 size=100
 class CrocMonitor:
     locationList =[]
-    import csv
     def __init__(self, size):
         
         self.locationList = []
@@ -32,7 +31,7 @@ class CrocMonitor:
                 if line[5] == "W":
                     water=True
 
-                self.locationList .append( [pointName,  x, y, number, edge, water] ) # etc
+                self.locationList.append([pointName,  x, y, number, edge, water]) # etc
                 
                 if not pointName in self.points:
                    
